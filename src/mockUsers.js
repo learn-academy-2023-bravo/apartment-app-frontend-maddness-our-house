@@ -1,4 +1,4 @@
-const user = [
+export const mockUsers = [
     {
         id: 1,
         email: "testing1@email.com",
