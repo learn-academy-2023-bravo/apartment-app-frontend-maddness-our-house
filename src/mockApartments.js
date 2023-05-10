@@ -1,4 +1,4 @@
-const  apartment = [
+export const  mockApartments = [
     {
         id: 1,
         user_id: 1,
