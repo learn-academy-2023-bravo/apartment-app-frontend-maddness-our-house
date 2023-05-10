@@ -4,13 +4,13 @@ import ApartmentEdit from "./pages/ApartmentEdit"
 import ApartmentIndex from "./pages/ApartmentIndex"
 import ApartmentNew from "./pages/ApartmentNew"
 import ApartmentProtectedIndex from "./pages/ApartmentProtectedIndex"
-import ApartmentShow from "./pages/ApartmentProtectedShow"
+import ApartmentShow from "./pages/ApartmentShow"
 import Home  from "./pages/Home"
 import NotFound  from "./pages/NotFound"
 import SignIn  from "./pages/SignIn"
 import SignUp  from "./pages/SignUp"
-import Header  from "./pages/Header"
-import Footer  from "./pages/Footer"
+import Header  from "./components/Header"
+import Footer  from "./components/Footer"
 
 
 
