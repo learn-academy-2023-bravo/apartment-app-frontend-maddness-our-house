@@ -16,7 +16,7 @@ const Header = () => {
   const toggle = () => setIsOpen(!isOpen)
 
   return (
-    <Navbar expand="lg" className='shadow-lg'>
+    <Navbar expand="lg" className='shadow-lg' >
       <NavbarBrand tag={RRNavLink} to='/'>Maddness Our House</NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
