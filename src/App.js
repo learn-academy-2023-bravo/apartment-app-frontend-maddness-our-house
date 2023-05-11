@@ -42,7 +42,7 @@ const App = () => {
       <Header current_user={currentUser} />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/apartmentindex' element={<ApartmentIndex />} />
+        <Route path='/apartmentindex' element={<ApartmentIndex apartments={apartments} />} />
         <Route path='/apartmentshow/:id' element={<ApartmentShow apartments={apartments} current_user={currentUser} />} />
         <Route path='/apartmentnew' element={<ApartmentNew />} />
         <Route path='/apartmentedit' element={<ApartmentEdit />} />
