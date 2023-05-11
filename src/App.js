@@ -17,9 +17,6 @@ import './App.css'
 import { Container } from 'reactstrap'
 
 const App = () => {
-
-
-
   const [apartments, setApartments] = useState([])
 
   useEffect(() => {
@@ -27,12 +24,12 @@ const App = () => {
   }, [])
 
   const readApartments = () => {
-    fetch("http://localhost:3000/apartments")
-    .then(response => response.json())
-    .then(payload => {
-      setApartments(payload)
-    })
-    .catch(error => console.log("Apartment read error", error))
+    fetch('http://localhost:3000/apartments')
+      .then((response) => response.json())
+      .then((payload) => {
+        setApartments(payload)
+      })
+      .catch((error) => console.log('Apartment read error', error))
   }
 
   const [currentUser, setCurrentUser] = useState(mockUsers[0])
@@ -42,12 +39,12 @@ const App = () => {
   }
 
   const signin = (email, password) => {
-    const user = mockUsers.find(user => user.email === email)
+    const user = mockUsers.find((user) => user.email === email)
 
     if (!user) {
       return console.error('no existing user with provided email')
     }
-    
+
     if (user.encrypted_password !== password) {
       return console.error('incorrect password')
     }
@@ -56,7 +53,16 @@ const App = () => {
   }
 
   const createApartment = (apartment) => {
-    setApartments([apartment, ...apartments])
+    fetch('http://localhost:3000/apartments', {
+      body: JSON.stringify(apartment),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    })
+      .then((response) => response.json())
+      .then(() => readApartments())
+      .catch((errors) => console.log('Apartment create errors:', errors))
   }
 
   return (
@@ -65,11 +71,38 @@ const App = () => {
       <Container className='my-5'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/apartmentindex' element={<ApartmentIndex apartments={apartments} />} />
-          <Route path='/apartmentshow/:id' element={<ApartmentShow apartments={apartments} current_user={currentUser} />} />
-          <Route path='/apartmentnew' element={<ApartmentNew createApartment={createApartment} current_user={currentUser} />} />
+          <Route
+            path='/apartmentindex'
+            element={<ApartmentIndex apartments={apartments} />}
+          />
+          <Route
+            path='/apartmentshow/:id'
+            element={
+              <ApartmentShow
+                apartments={apartments}
+                current_user={currentUser}
+              />
+            }
+          />
+          <Route
+            path='/apartmentnew'
+            element={
+              <ApartmentNew
+                createApartment={createApartment}
+                current_user={currentUser}
+              />
+            }
+          />
           <Route path='/apartmentedit' element={<ApartmentEdit />} />
-          <Route path='/myapartments' element={<MyApartments apartments={apartments} current_user={currentUser} />} />
+          <Route
+            path='/myapartments'
+            element={
+              <MyApartments
+                apartments={apartments}
+                current_user={currentUser}
+              />
+            }
+          />
           <Route path='/signin' element={<SignIn signin={signin} />} />
           <Route path='/signup' element={<SignUp signup={signup} />} />
           <Route path='*' element={<NotFound />} />
