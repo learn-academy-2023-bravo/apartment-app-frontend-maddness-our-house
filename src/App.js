@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import ApartmentEdit from './pages/ApartmentEdit'
 import ApartmentIndex from './pages/ApartmentIndex'
@@ -11,12 +11,29 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import { mockApartments } from './mockApartments'
+// import { mockApartments } from './mockApartments'
 import { mockUsers } from './mockUsers'
 import './App.css'
 
 const App = () => {
-  const [apartments, setApartments] = useState(mockApartments)
+
+
+
+  const [apartments, setApartments] = useState([])
+
+  useEffect(() => {
+    readApartments()
+  }, [])
+
+  const readApartments = () => {
+    fetch("http://localhost:3000/apartments")
+    .then(response => response.json())
+    .then(payload => {
+      setApartments(payload)
+    })
+    .catch(error => console.log("Apartment read error", error))
+  }
+
   const [currentUser, setCurrentUser] = useState(mockUsers[0])
 
   const signup = (email, password) => {
