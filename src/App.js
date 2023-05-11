@@ -17,7 +17,7 @@ import './App.css'
 
 const App = () => {
   const [apartments, setApartments] = useState(mockApartments)
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(mockUsers[0])
 
   const signup = (email, password) => {
     setCurrentUser({ email: email, password: password })
@@ -46,7 +46,7 @@ const App = () => {
         <Route path='/apartmentshow/:id' element={<ApartmentShow apartments={apartments} current_user={currentUser} />} />
         <Route path='/apartmentnew' element={<ApartmentNew />} />
         <Route path='/apartmentedit' element={<ApartmentEdit />} />
-        <Route path='/myapartments' element={<MyApartments />} />
+        <Route path='/myapartments' element={<MyApartments apartments={apartments} current_user={currentUser} />} />
         <Route path='/signin' element={<SignIn signin={signin} />} />
         <Route path='/signup' element={<SignUp signup={signup} />} />
         <Route path='*' element={<NotFound />} />
