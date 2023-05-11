@@ -14,6 +14,7 @@ import Footer from './components/Footer'
 import { mockApartments } from './mockApartments'
 import { mockUsers } from './mockUsers'
 import './App.css'
+import { Container } from 'reactstrap'
 
 const App = () => {
   const [apartments, setApartments] = useState(mockApartments)
@@ -37,20 +38,26 @@ const App = () => {
     setCurrentUser(user)
   }
 
+  const createApartment = (apartment) => {
+    setApartments([apartment, ...apartments])
+  }
+
   return (
     <>
       <Header current_user={currentUser} />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/apartmentindex' element={<ApartmentIndex apartments={apartments} />} />
-        <Route path='/apartmentshow/:id' element={<ApartmentShow apartments={apartments} current_user={currentUser} />} />
-        <Route path='/apartmentnew' element={<ApartmentNew />} />
-        <Route path='/apartmentedit' element={<ApartmentEdit />} />
-        <Route path='/myapartments' element={<MyApartments apartments={apartments} current_user={currentUser} />} />
-        <Route path='/signin' element={<SignIn signin={signin} />} />
-        <Route path='/signup' element={<SignUp signup={signup} />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+      <Container className='my-5'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/apartmentindex' element={<ApartmentIndex apartments={apartments} />} />
+          <Route path='/apartmentshow/:id' element={<ApartmentShow apartments={apartments} current_user={currentUser} />} />
+          <Route path='/apartmentnew' element={<ApartmentNew createApartment={createApartment} current_user={currentUser} />} />
+          <Route path='/apartmentedit' element={<ApartmentEdit />} />
+          <Route path='/myapartments' element={<MyApartments apartments={apartments} current_user={currentUser} />} />
+          <Route path='/signin' element={<SignIn signin={signin} />} />
+          <Route path='/signup' element={<SignUp signup={signup} />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </Container>
       <Footer />
     </>
   )
