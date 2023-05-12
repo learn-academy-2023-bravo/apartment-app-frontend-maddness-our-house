@@ -18,7 +18,7 @@ const Header = ({ current_user }) => {
   return (
     <Navbar expand='lg' className='shadow-lg'>
       <NavbarBrand tag={RRNavLink} to='/'>
-        Maddness Our House
+        Madness Our House
       </NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
