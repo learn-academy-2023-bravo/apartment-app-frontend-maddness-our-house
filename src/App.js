@@ -36,7 +36,33 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState(null)
 
   const signup = (email, password) => {
-    setCurrentUser({ email: email, password: password })
+    // setCurrentUser({ email: email, password: password }) for mockuser
+    const userInfo = {
+      user: { email, password },
+    }
+
+    fetch('http://localhost:3000/signup', {
+      body: JSON.stringify(userInfo),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      method: 'POST',
+    })
+      .then((response) => {
+        // store the token
+        localStorage.setItem('token', response.headers.get('Authorization'))
+        return response.json()
+      })
+      .then((payload) => {
+        if (payload?.error) {
+          console.error(payload.error)
+        } else {
+          setCurrentUser(payload)
+          navigate('/myapartments')
+        }
+      })
+      .catch((error) => console.log('login errors: ', error))
   }
 
   const signin = (email, password) => {
@@ -67,6 +93,7 @@ const App = () => {
       })
       .catch((error) => console.log('login errors: ', error))
 
+      
     // SignIn with mock users data
     // const user = mockUsers.find((user) => user.email === email)
     //
@@ -79,6 +106,22 @@ const App = () => {
     // }
     //
     // setCurrentUser(user)
+  }
+
+  const logout = () => {
+    fetch('http://localhost:3000/logout', {
+      headers: {
+        "Content-Type": 'application/json',
+        "Authorization": localStorage.getItem("token") //retrieve the token 
+      },
+      method: 'DELETE'
+    })
+    .then(payload => {
+    localStorage.removeItem("token")  // remove the token
+    navigate('/')
+    setCurrentUser(null)
+  })
+  .catch(error => console.log("log out errors: ", error))
   }
 
   const createApartment = (apartment) => {
@@ -96,7 +139,7 @@ const App = () => {
 
   return (
     <>
-      <Header current_user={currentUser} />
+      <Header current_user={currentUser} logout={logout} />
       <Container className='my-5'>
         <Routes>
           <Route path='/' element={<Home />} />
