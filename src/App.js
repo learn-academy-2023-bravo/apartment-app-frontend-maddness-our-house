@@ -16,6 +16,8 @@ import { mockUsers } from './mockUsers'
 import './App.css'
 import { Container } from 'reactstrap'
 
+const BASE_URL = 'http://localhost:3000'
+
 const App = () => {
   const [apartments, setApartments] = useState([])
 
@@ -24,7 +26,7 @@ const App = () => {
   }, [])
 
   const readApartments = () => {
-    fetch('http://localhost:3000/apartments')
+    fetch(`${BASE_URL}/apartments`)
       .then((response) => response.json())
       .then((payload) => {
         setApartments(payload)
@@ -53,7 +55,7 @@ const App = () => {
   }
 
   const createApartment = (apartment) => {
-    fetch('http://localhost:3000/apartments', {
+    fetch(`${BASE_URL}/apartments`, {
       body: JSON.stringify(apartment),
       headers: {
         'Content-Type': 'application/json',
