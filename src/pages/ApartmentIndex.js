@@ -22,7 +22,7 @@ const ApartmentIndex = ({ apartments }) => {
                 <img
                   alt={`profile of apartment listing ${apartment.street}`}
                   src={apartment.image}
-                  className='object-fit-cover'
+                  style={{objectFit: 'cover'}}
                   width='100%'
                   height='200px'
                 />

@@ -7,10 +7,11 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Button,
 } from 'reactstrap'
 import { NavLink as RRNavLink } from 'react-router-dom'
 
-const Header = ({ current_user }) => {
+const Header = ({ current_user, logout }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggle = () => setIsOpen(!isOpen)
@@ -45,6 +46,14 @@ const Header = ({ current_user }) => {
                 <NavLink tag={RRNavLink} to='/myapartments'>
                   My Listings
                 </NavLink>
+              </NavItem>
+              <NavItem>
+                <Button 
+                color='danger'
+                onClick={logout}
+                >
+                  Logout
+                </Button>
               </NavItem>
             </>
           ) : (
