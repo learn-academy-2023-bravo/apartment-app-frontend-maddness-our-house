@@ -128,7 +128,7 @@ const ApartmentNew = ({ createApartment, current_user }) => {
                 onChange={handleChange}
               >
                 {states.map((state) => (
-                  <option value={state}>{state}</option>
+                  <option value={state} key={state}>{state}</option>
                 ))}
               </Input>
             </FormGroup>
@@ -210,7 +210,7 @@ const ApartmentNew = ({ createApartment, current_user }) => {
                 onChange={handleChange}
               >
                 {petOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>{option}</option>
                 ))}
               </Input>
             </FormGroup>

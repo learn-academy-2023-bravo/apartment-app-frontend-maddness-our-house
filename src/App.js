@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import ApartmentEdit from './pages/ApartmentEdit'
 import ApartmentIndex from './pages/ApartmentIndex'
 import ApartmentNew from './pages/ApartmentNew'
@@ -12,11 +12,12 @@ import SignUp from './pages/SignUp'
 import Header from './components/Header'
 import Footer from './components/Footer'
 // import { mockApartments } from './mockApartments'
-import { mockUsers } from './mockUsers'
+// import { mockUsers } from './mockUsers'
 import './App.css'
 import { Container } from 'reactstrap'
 
 const App = () => {
+  const navigate = useNavigate()
   const [apartments, setApartments] = useState([])
 
   useEffect(() => {
@@ -32,24 +33,52 @@ const App = () => {
       .catch((error) => console.log('Apartment read error', error))
   }
 
-  const [currentUser, setCurrentUser] = useState(mockUsers[0])
+  const [currentUser, setCurrentUser] = useState(null)
 
   const signup = (email, password) => {
     setCurrentUser({ email: email, password: password })
   }
 
   const signin = (email, password) => {
-    const user = mockUsers.find((user) => user.email === email)
-
-    if (!user) {
-      return console.error('no existing user with provided email')
+    const userInfo = {
+      user: { email, password },
     }
 
-    if (user.encrypted_password !== password) {
-      return console.error('incorrect password')
-    }
+    fetch('http://localhost:3000/login', {
+      body: JSON.stringify(userInfo),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      method: 'POST',
+    })
+      .then((response) => {
+        // store the token
+        localStorage.setItem('token', response.headers.get('Authorization'))
+        return response.json()
+      })
+      .then((payload) => {
+        if (payload?.error) {
+          console.error(payload.error)
+        } else {
+          setCurrentUser(payload)
+          navigate('/myapartments')
+        }
+      })
+      .catch((error) => console.log('login errors: ', error))
 
-    setCurrentUser(user)
+    // SignIn with mock users data
+    // const user = mockUsers.find((user) => user.email === email)
+    //
+    // if (!user) {
+    //   return console.error('no existing user with provided email')
+    // }
+    //
+    // if (user.encrypted_password !== password) {
+    //   return console.error('incorrect password')
+    // }
+    //
+    // setCurrentUser(user)
   }
 
   const createApartment = (apartment) => {

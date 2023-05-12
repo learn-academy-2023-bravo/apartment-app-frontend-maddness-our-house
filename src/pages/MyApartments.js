@@ -20,12 +20,12 @@ const MyApartments = ({ apartments, current_user }) => {
       <h1>My Apartment Listings</h1>
       <Row>
         {myApartments.map((apartment, index) => (
-          <Col xs={12} sm={6} md={4} lg={3}>
-            <Card style={{ width: '18rem' }} key={index}>
+          <Col xs={12} sm={6} md={4} lg={3} key={index}>
+            <Card>
               <img
                 alt={`profile of apartment listing ${apartment.street}`}
                 src={apartment.image}
-                className='object-fit-cover'
+                style={{objectFit: 'cover'}}
                 width='100%'
                 height='200px'
               />
